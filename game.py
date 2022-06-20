@@ -1,9 +1,35 @@
+from turtle import pos
 import pygame
 import random
 pygame.init()
 largura = 800
 altura = 300
 tamanho = (largura, altura)
+pygameDisplay = pygame.display
+pygameDisplay.set_caption("Kuduairo")
+gameDisplay = pygame.display.set_mode(tamanho)
+gameIcon = pygame.image.load("assets/icone.jpg")
+pygameDisplay.set_icon(gameIcon)
+
+bg = pygame.image.load("assets/fundo.jpg")
+
+bg_destruido = pygame.image.load("assets/perdeu.jpg")
+
+black = (0, 0, 0)
+white = (255, 255, 255)
+clock = pygame.time.Clock()
+gameEvents = pygame.event
+
+def dead(pontos):
+    gameDisplay.blit(bg_destruido, (0, 0))
+    pygame.mixer.music.stop()
+    fonte = pygame.font.Font("freesansbold.ttf", 40)
+    fonteContinue = pygame.font.Font("freesansbold.ttf", 20)
+    texto = fonte.render("Voiçuir perdui com" +str(pontos) + " pontos!", True, white)
+    textoContinue = fonteContinue.rende("Apierte enter paira continuaire...", True, white)
+    gameDisplay.blit(textoContinue, (50, 200))
+    gameDisplay.blit(texto, (50, 100))
+    pygameDisplay.update()
 
 def jogo():
     posicaoX = 0
@@ -77,3 +103,23 @@ def jogo():
                     posicaoY = random.randrange(0, altura)
                     velocidade = velocidade + 1
                     pontos = pontos + 1
+            gameDisplay.blit(brasil, (posicaoX, posicaoY))
+            gameDisplay.blit(kuduairo, (posicaoXKuduairo, posicaoYKuduairo))
+            fonte = pygame.font.Font("freesansbold.ttf", 20)
+            texto = fonte.render("Poaintos: "+str(pontos), True, white)
+            gameDisplay.blit(texto, (20, 20))
+
+            pixelsYKuduairo = list(range(posicaoYKuduairo, posicaoYKuduairo + alturaKuduairo + 1))
+            pixelsXKuduairo = list(range (posicaoXKuduairo, posicaoXKuduairo + larguraKuduairo + 1))
+
+            pixelsYBrasil = list(range(posicaoY, posicaoY + alturaBrasil + 1))
+            pixelsXBrasil = list(range(posicaoX, posicaoX + larguraBrasil + 1))
+
+            if len(list(set(pixelsYBrasil) & set(pixelsXKuduairo))) > dificuldade:
+                if len (list(set(pixelsXBrasil) & set(pixelsYBrasil))) > dificuldade:
+                    jogando = False
+                    dead(pontos)
+        pygameDisplay.update()
+        clock.tick(60)
+
+jogo()
