@@ -12,7 +12,7 @@ pygameDisplay.set_icon(gameIcon)
 
 bg = pygame.image.load("assets/fundo3.jpg")
 
-bg_destruido = pygame.image.load("assets/perdeu.jpg")
+bg_destruido = pygame.image.load("assets/nameke.png")
 
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -22,8 +22,8 @@ gameEvents = pygame.event
 def dead(pontos):
     gameDisplay.blit(bg_destruido, (0, 0))
     pygame.mixer.music.stop()
-    fonte = pygame.font.Font("freesansbold.ttf", 40)
-    fonteContinue = pygame.font.Font("freesansbold.ttf", 20)
+    fonte = pygame.font.Font("freesansbold.ttf", 55)
+    fonteContinue = pygame.font.Font("freesansbold.ttf", 30)
     texto = fonte.render("Você perdeu com" +str(pontos) + " pontos!", True, white)
     textoContinue = fonteContinue.render("Aperte enter para continuar...", True, white)
     gameDisplay.blit(textoContinue, (50, 200))
@@ -42,6 +42,9 @@ def jogo():
     pontos = 0
     goku = pygame.image.load("assets/goku.png")
     freeza = pygame.image.load("assets/freeza.png")
+    pygame.mixer.music.load("assets/trilha.mp3")
+    pygame.mixer.music.play(-1)
+    pygame.mixer.music.set_volume(1)
 
     alturaGoku = 100
     larguraGoku = 60
@@ -105,7 +108,7 @@ def jogo():
             gameDisplay.blit(freeza, (posicaoX, posicaoY))
             gameDisplay.blit(goku, (posicaoXGoku, posicaoYGoku))
             fonte = pygame.font.Font("freesansbold.ttf", 20)
-            texto = fonte.render("Poaintos: "+str(pontos), True, white)
+            texto = fonte.render("Pontos: "+str(pontos), True, white)
             gameDisplay.blit(texto, (20, 20))
 
             pixelsYGoku = list(range(posicaoYGoku, posicaoYGoku + alturaGoku + 1))
