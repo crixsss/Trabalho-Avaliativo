@@ -9,8 +9,8 @@ tamanho = (largura, altura)
 pygameDisplay = pygame.display
 pygameDisplay.set_caption("Dragon Ball Z")
 gameDisplay = pygame.display.set_mode(tamanho)
-#gameIcon = pygame.image.load("assets/icone.ico")
-#pygameDisplay.set_icon(gameIcon)
+gameIcon = pygame.image.load("assets/icone.ico")
+pygameDisplay.set_icon(gameIcon)
 
 bg = pygame.image.load("assets/fundo3.jpg")
 
