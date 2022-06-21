@@ -1,5 +1,7 @@
+import os
 import pygame
 import random
+from assets.funcoes import clean
 pygame.init()
 largura = 1024
 altura = 510
@@ -7,12 +9,15 @@ tamanho = (largura, altura)
 pygameDisplay = pygame.display
 pygameDisplay.set_caption("Dragon Ball Z")
 gameDisplay = pygame.display.set_mode(tamanho)
-gameIcon = pygame.image.load("assets/icone.jpg")
-pygameDisplay.set_icon(gameIcon)
+#gameIcon = pygame.image.load("assets/icone.ico")
+#pygameDisplay.set_icon(gameIcon)
 
 bg = pygame.image.load("assets/fundo3.jpg")
 
 bg_destruido = pygame.image.load("assets/nameke.png")
+
+gameOverSom = pygame.mixer.Sound("assets/pacman.wav")
+gameOverSom.set_volume(0.5)
 
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -22,9 +27,10 @@ gameEvents = pygame.event
 def dead(pontos):
     gameDisplay.blit(bg_destruido, (0, 0))
     pygame.mixer.music.stop()
+    pygame.mixer.Sound.play(gameOverSom)
     fonte = pygame.font.Font("freesansbold.ttf", 55)
     fonteContinue = pygame.font.Font("freesansbold.ttf", 30)
-    texto = fonte.render("Você perdeu com" +str(pontos) + " pontos!", True, white)
+    texto = fonte.render("Você perdeu com " +str(pontos) + " pontos!", True, white)
     textoContinue = fonteContinue.render("Aperte enter para continuar...", True, white)
     gameDisplay.blit(textoContinue, (50, 200))
     gameDisplay.blit(texto, (50, 100))
@@ -42,7 +48,7 @@ def jogo():
     pontos = 0
     goku = pygame.image.load("assets/goku.png")
     freeza = pygame.image.load("assets/freeza.png")
-    pygame.mixer.music.load("assets/trilha.mp3")
+    pygame.mixer.music.load("assets/trilha.wav")
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(1)
 
@@ -123,5 +129,25 @@ def jogo():
                     dead(pontos)
         pygameDisplay.update()
         clock.tick(60)
+        
+while True:
+    try:
+        print ("\n")
+        arquivo = open("arquivo.txt", "a")
+        arquivo.write(input("Digite seu nome: ") + "\n")
+        arquivo.write(input("Digite seu email:  ") + "\n")
+        arquivo.close()
+
+        arquivo = open("arquivo.txt", "r")
+        clean()
+        for linha in arquivo:
+            linha = linha.rstrip()
+            print(linha)
+        arquivo.close()
+        print()
+        break
+    except:
+        arquivo = open("arquivo.txt", "w")
+        arquivo.close()
 
 jogo()
